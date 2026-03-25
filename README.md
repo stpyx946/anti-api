@@ -21,7 +21,7 @@
 
 ## What's New (v2.9.0)
 
-- **Homebrew install path** - You can now install Anti-API with Homebrew and start it directly by running `anti-api`
+- **Stable Homebrew package** - Homebrew now installs a prebuilt macOS Apple Silicon bundle, so `brew install anti-api` no longer depends on local Rust, LLVM, or Bun downloads
 - **WinGet distribution pipeline** - Added Windows portable packaging, WinGet manifest generation, and release workflow for `winget install anti-api`
 - **Unified launcher behavior** - Homebrew and WinGet installs now share the same contract: `anti-api` starts the service directly in any terminal
 - **Portable runtime support** - Added a Windows portable entrypoint that starts the Rust proxy, serves the bundled dashboard files, and avoids package-manager self-update conflicts
@@ -418,7 +418,7 @@ MIT
 
 ## 更新内容 (v2.9.0)
 
-- **新增 Homebrew 安装链路** - 现在可以通过 Homebrew 安装 Anti-API，并在任意终端直接运行 `anti-api` 启动服务
+- **稳定的 Homebrew 安装包** - Homebrew 现在直接安装预编译的 macOS Apple Silicon 包，`brew install anti-api` 不再依赖本地下载 Rust、LLVM 或 Bun
 - **新增 WinGet 发布链路** - 补齐了 Windows portable 打包、WinGet manifest 生成和 release workflow，为 `winget install anti-api` 做准备
 - **统一安装后启动行为** - Homebrew 和 WinGet 安装后的行为统一为：在任意终端输入 `anti-api` 直接启动服务
 - **新增便携运行时支持** - Windows portable 入口会自动拉起 Rust proxy，加载打包后的 dashboard 静态文件，并规避包管理器安装下的自更新冲突
