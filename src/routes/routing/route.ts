@@ -37,6 +37,7 @@ import { readFileSync } from "fs"
 import { join } from "path"
 import { randomUUID } from "crypto"
 import type { ProviderAccount, ProviderAccountSummary } from "~/services/auth/types"
+import { getPublicDir } from "~/lib/public-dir"
 
 export const routingRouter = new Hono()
 
@@ -151,7 +152,7 @@ function normalizeRemoteModels(prefix: string, models: Array<{ id?: string; name
 
 routingRouter.get("/", (c) => {
     try {
-        const htmlPath = join(import.meta.dir, "../../../public/routing.html")
+        const htmlPath = join(getPublicDir(import.meta.dir, "../../../public"), "routing.html")
         const html = readFileSync(htmlPath, "utf-8")
         return c.html(html)
     } catch {

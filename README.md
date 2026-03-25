@@ -19,13 +19,24 @@
 
 > **Disclaimer**: This project is based on reverse engineering of Antigravity. Future compatibility is not guaranteed. For long-term use, avoid updating Antigravity.
 
-## What's New (v2.8.0)
+## What's New (v2.9.0)
+
+- **Homebrew install path** - You can now install Anti-API with Homebrew and start it directly by running `anti-api`
+- **WinGet distribution pipeline** - Added Windows portable packaging, WinGet manifest generation, and release workflow for `winget install anti-api`
+- **Unified launcher behavior** - Homebrew and WinGet installs now share the same contract: `anti-api` starts the service directly in any terminal
+- **Portable runtime support** - Added a Windows portable entrypoint that starts the Rust proxy, serves the bundled dashboard files, and avoids package-manager self-update conflicts
+- **Package-manager safeguards** - Homebrew/WinGet installs now redirect updates to `brew upgrade anti-api` and `winget upgrade anti-api` instead of self-overwriting
+
+<details>
+<summary>v2.8.0</summary>
 
 - **Zed hosted-model support** - Anti-API can now import the current Zed.app login state and route requests to Zed-hosted models
 - **Per-account dynamic model fetch** - Routing fetches live models from each available Codex and Copilot account, and now includes Zed account-level model sync
 - **Zed account behavior clarified** - Zed accounts can be imported one by one and kept in Anti-API, but they cannot be bulk auto-discovered like Codex/Copilot
 - **Zed quota widget updated** - The Zed card now shows shared all-model support status and billing-period timing instead of misleading remaining-credit percentages
 - **Zed stability hardening** - Added request timeouts and success-state recovery for Zed account fetch, model sync, and completion requests
+
+</details>
 
 <details>
 <summary>v2.7.1</summary>
@@ -108,6 +119,7 @@ Notes:
 - `bun run brew:formula` is a maintainer command that refreshes `Formula/anti-api.rb` for the current tagged release.
 - Local maintainer install remains available with `brew install --formula ./Formula/anti-api.rb`.
 - `anti-api --update` is intentionally disabled for Homebrew-managed installs so Homebrew remains the source of truth.
+- After installation, `anti-api` starts the service directly in any terminal.
 
 ### Linux
 
@@ -122,6 +134,15 @@ bun run src/main.ts start
 ### Windows
 
 Double-click `start.bat` to launch.
+
+WinGet packaging is prepared in this repository. After the release asset and `winget-pkgs` manifest are published, the install path will be:
+
+```powershell
+winget install anti-api
+anti-api
+```
+
+After installation, `anti-api` starts the service directly in any terminal.
 
 ### macOS
 
@@ -395,13 +416,24 @@ MIT
 
 > **免责声明**：本项目基于 Antigravity 逆向开发，未来版本兼容性未知，长久使用请尽可能避免更新Antigravity。
 
-## 更新内容 (v2.8.0)
+## 更新内容 (v2.9.0)
+
+- **新增 Homebrew 安装链路** - 现在可以通过 Homebrew 安装 Anti-API，并在任意终端直接运行 `anti-api` 启动服务
+- **新增 WinGet 发布链路** - 补齐了 Windows portable 打包、WinGet manifest 生成和 release workflow，为 `winget install anti-api` 做准备
+- **统一安装后启动行为** - Homebrew 和 WinGet 安装后的行为统一为：在任意终端输入 `anti-api` 直接启动服务
+- **新增便携运行时支持** - Windows portable 入口会自动拉起 Rust proxy，加载打包后的 dashboard 静态文件，并规避包管理器安装下的自更新冲突
+- **增强包管理器保护** - Homebrew / WinGet 安装不再自覆盖更新，而是分别提示使用 `brew upgrade anti-api` 和 `winget upgrade anti-api`
+
+<details>
+<summary>v2.8.0</summary>
 
 - **新增 Zed 托管模型支持** - Anti-API 现在可以导入当前 Zed.app 的登录态，并将请求路由到 Zed 提供的模型
 - **按账号动态拉取模型** - Routing 会从每个可用的 Codex 和 Copilot 账号实时拉取模型，并加入 Zed 的账号级模型同步
 - **明确 Zed 账号边界** - Zed 账号可以逐个导入并保存在 Anti-API 中，但不能像 Codex/Copilot 一样自动批量发现
 - **更新 Zed 配额卡片** - Zed 卡片改为展示共享的 all models 支持状态和订阅周期时间，不再用误导性的剩余额度百分比
 - **增强 Zed 稳定性** - 为 Zed 的账号读取、模型同步和 completion 请求增加了超时控制与成功后状态恢复
+
+</details>
 
 ## 特性
 
@@ -443,10 +475,20 @@ anti-api
 - `bun run brew:formula` 是维护者命令，用于按当前 tag 版本刷新 `Formula/anti-api.rb`。
 - 维护者仍可使用 `brew install --formula ./Formula/anti-api.rb` 做本地 formula 安装。
 - Homebrew 安装会禁用 `anti-api --update`，避免和 Homebrew 的包管理冲突。
+- 安装完成后，在任意终端输入 `anti-api` 会直接启动服务。
 
 ### Windows
 
 双击 `start.bat` 启动。
+
+仓库内已经补齐 WinGet 打包与 manifest 生成链路。待对应 release 资产和 `winget-pkgs` manifest 发布后，可直接使用：
+
+```powershell
+winget install anti-api
+anti-api
+```
+
+安装完成后，在任意终端输入 `anti-api` 会直接启动服务。
 
 ### macOS
 

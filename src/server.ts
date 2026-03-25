@@ -29,6 +29,7 @@ import { authStore } from "./services/auth/store"
 import { formatLogTime, getRequestLogContext, runWithRequestContext } from "./lib/logger"
 import { initLogCapture, setLogCaptureEnabled } from "./lib/log-buffer"
 import { getUsage, resetUsage } from "./services/usage-tracker"
+import { getPublicDir } from "./lib/public-dir"
 
 export const server = new Hono()
 
@@ -100,7 +101,7 @@ server.route("/logs", logsRouter)
 // Remote 控制页面 - HTML
 server.get("/remote-panel", async (c) => {
     try {
-        const htmlPath = join(import.meta.dir, "../public/remote.html")
+        const htmlPath = join(getPublicDir(import.meta.dir), "remote.html")
         const html = readFileSync(htmlPath, "utf-8")
         return c.html(html)
     } catch (error) {
@@ -210,7 +211,7 @@ server.get("/models", modelsHandler)  // 无前缀版本 for GUI tools
 // 配额面板 - HTML Dashboard
 server.get("/quota", async (c) => {
     try {
-        const htmlPath = join(import.meta.dir, "../public/quota.html")
+        const htmlPath = join(getPublicDir(import.meta.dir), "quota.html")
         const html = readFileSync(htmlPath, "utf-8")
         return c.html(html)
     } catch (error) {

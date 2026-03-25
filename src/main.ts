@@ -363,4 +363,12 @@ const main = defineCommand({
     subCommands: { start, remote, "add-account": addAccount, accounts: listAccounts, "logout-ide": logoutIde },
 })
 
-await runMain(main)
+export { main }
+
+export async function runCli(rawArgs?: string[]): Promise<void> {
+    await runMain(main, rawArgs ? { rawArgs } : undefined)
+}
+
+if (import.meta.main) {
+    await runCli()
+}

@@ -147,6 +147,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
 exit /b 0
 
 :update_release
+if /I "%ANTI_API_PACKAGE_MANAGER%"=="homebrew" (
+    echo This installation is managed by Homebrew. Run: brew upgrade anti-api
+    exit /b 0
+)
+if /I "%ANTI_API_PACKAGE_MANAGER%"=="winget" (
+    echo This installation is managed by WinGet. Run: winget upgrade anti-api
+    exit /b 0
+)
+if "%ANTI_API_NO_SELF_UPDATE%"=="1" (
+    echo Self-update is disabled for this installation.
+    exit /b 0
+)
 set "TMPDIR=%TEMP%\anti-api-update"
 set "ZIP=%TMPDIR%\anti-api.zip"
 set "HASHFILE=%TMPDIR%\anti-api.zip.sha256"

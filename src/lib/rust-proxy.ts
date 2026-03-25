@@ -1,8 +1,8 @@
 /**
  * Rust Proxy Bridge
- * Connects to Rust proxy binary started by start.command
+ * Connects to Rust proxy binary started by the platform launcher
  * Does NOT spawn new processes - avoids port conflicts
- */
+*/
 
 import consola from "consola"
 
@@ -12,7 +12,7 @@ let proxyChecked = false
 let proxyAvailable = false
 
 /**
- * Check if Rust proxy is running (started by start.command)
+ * Check if Rust proxy is running (started by the launcher)
  */
 export async function startRustProxy(): Promise<void> {
     if (proxyChecked && proxyAvailable) return
@@ -33,7 +33,7 @@ export async function startRustProxy(): Promise<void> {
     } catch (e) {
         proxyChecked = true
         proxyAvailable = false
-        throw new Error("Rust proxy not running - please start via start.command")
+        throw new Error("Rust proxy not running - please start Anti-API via its launcher")
     }
 }
 
@@ -66,7 +66,7 @@ export async function sendViaRustProxy(
     return response.json()
 }
 
-// No process management needed - start.command handles lifecycle
+// No process management needed - launcher handles lifecycle
 export function stopRustProxy(): void {
-    // No-op - managed by start.command
+    // No-op - managed by launcher
 }
